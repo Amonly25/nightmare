@@ -1,0 +1,7 @@
+blood_moon:
+  start: "The Blood Moon has risen!"
+  end: "The Blood Moon has set!"
+
+headless_horseman:
+  start: "The Headless Horseman has arrived!"
+  end: "The Headless Horseman has left!"

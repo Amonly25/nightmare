@@ -1,0 +1,34 @@
+blood_moon:
+  duration: 10 # In minutes
+  enabled_worlds:
+    - world
+  bossbar:
+    title: "Blood Moon"
+    color: RED
+
+headless_horseman:
+  duration: 10 # In minutes 
+  enabled_worlds:
+    - world
+  bossbar:
+    title: "Headless Horseman"
+    color: PURPLE
+
+
+# Can be any time in the format of HH:MM
+# The event will start at the time specified
+scheduler:
+  monday:
+    "22:00": "BLOOD_MOON"
+  tuesday:
+    "22:00": "HEADLESS_HORSEMAN"
+  ednesday:
+   "22:00": "BLOOD_MOON"
+  thursday:
+    "22:00": "HEADLESS_HORSEMAN"
+  friday:
+    "22:00": "BLOOD_MOON"
+  saturday:
+    "22:00": "HEADLESS_HORSEMAN"
+  sunday:
+    "22:00": "BLOOD_MOON"

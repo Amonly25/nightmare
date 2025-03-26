@@ -2,21 +2,21 @@ package com.ar.askgaming.nightmare.Types;
 
 import com.ar.askgaming.nightmare.NightMare;
 
-public class BloodMoon extends NightAbstract {
+public class HeadLessHorseMan extends NightAbstract {
 
-    public BloodMoon() {
-        super(NightMare.Type.BLOOD_MOON);
+    public HeadLessHorseMan() {
+        super(NightMare.Type.HEADLESS_HORSEMAN);
     }
 
     @Override
     public void start() {
 
-
+        
     }
 
     @Override
     public void end() {
 
-        
-    }
+
+    }  
 }
