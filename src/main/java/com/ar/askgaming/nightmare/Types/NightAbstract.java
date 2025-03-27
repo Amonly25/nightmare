@@ -4,23 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.ar.askgaming.nightmare.NightMare;
 
-public abstract class NightAbstract{
+public abstract class NightAbstract extends BukkitRunnable{
 
     protected List<World> affectedWorlds = new ArrayList<>();
     protected final NightMare.Type type;
     protected NightMare.State state = NightMare.State.WAITING;
     protected BossBar bossBar;
 
-    protected Integer duration;
-    protected Integer coutdown;
+    protected Integer duration, coutdown;
 
     protected final NightMare plugin;
 
@@ -30,6 +33,9 @@ public abstract class NightAbstract{
 
         createBossBar();
         loadConfig();
+
+        
+
     }
     
     protected void createBossBar() {
@@ -37,8 +43,8 @@ public abstract class NightAbstract{
         bossBar.setVisible(true);
     }
     protected void loadConfig() {
-        duration = plugin.getConfig().getInt(type.name().toLowerCase() + ".duration",10);
-
+        duration = plugin.getConfig().getInt(type.name().toLowerCase() + ".duration",600);
+        coutdown = duration;
         String title = plugin.getConfig().getString(type.name().toLowerCase() + ".title", type.name());
         if (bossBar != null) {
             bossBar.setTitle(title);
@@ -78,6 +84,7 @@ public abstract class NightAbstract{
 
         getAffectedWorlds().forEach(world -> {
             world.setTime(13000);
+            world.setStorm(isCancelled());
         });
 
         start();
@@ -117,9 +124,6 @@ public abstract class NightAbstract{
         return affectedWorlds;
     }
     public void updateBossBar() {
-        getAffectedWorlds().forEach(world -> {
-            if (world.getTime() > 0) world.setTime(18000);
-        });
 
         if (bossBar != null) {
             bossBar.setProgress((double) coutdown / duration);
@@ -131,5 +135,40 @@ public abstract class NightAbstract{
     public Integer getCountdown() {
         return coutdown;
     }
+    @Override
+    public void run() {
+        updateBossBar();
+        if (state == NightMare.State.RUNNING) {
+            if (type == NightMare.Type.BLOOD_MOON) {
+                for (Player player : getAffectedPlayers()) {
+                    Location center = player.getLocation();
 
+                    for (int i = 0; i < 20; i++) { // Generar múltiples gotas en cada ciclo
+                        double angle = Math.random() * 360;
+                        double distance = Math.random() * 15; // Hasta 10 bloques de distancia
+                
+                        double x = center.getX() + Math.cos(Math.toRadians(angle)) * distance + (Math.random() - 0.5);
+                        double z = center.getZ() + Math.sin(Math.toRadians(angle)) * distance + (Math.random() - 0.5);
+                        
+                        // Variación de altura más natural
+                        double baseHeight = center.getY() + 5; // Altura base
+                        double variation = Math.random() * (Math.random() > 0.5 ? 15 : 2); // Diferentes alturas para cada gota
+                        double y = baseHeight + variation;
+                
+                        Location bloodLocation = new Location(player.getWorld(), x, y, z);
+                
+                        // Efecto de lluvia de sangre con LANDING_LAVA
+                        player.getWorld().spawnParticle(Particle.LANDING_LAVA, bloodLocation, 3, 0, 0, 0, 0); // Reducido a 3 partículas para mejor dispersión
+                
+                    
+                    }
+                }
+            }
+            if (coutdown > 0) {
+                coutdown--;
+            } else {
+                endEvent();
+            }
+        }
+    }
 }

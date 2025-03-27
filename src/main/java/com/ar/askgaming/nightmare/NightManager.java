@@ -43,27 +43,7 @@ public class NightManager extends BukkitRunnable{
     @Override
     public void run() {
 
-        checkTimeForScheduler();
-
-        if (bloodMoon.getState() == NightMare.State.RUNNING) {
-            bloodMoon.updateBossBar();
-            int countdown = bloodMoon.getCountdown();
-            if (countdown > 0) {
-                bloodMoon.setCountdown(countdown - 1);
-            } else {
-                bloodMoon.endEvent();
-            }
-        }
-        if (headLessHorseMan.getState() == NightMare.State.RUNNING) {
-            headLessHorseMan.updateBossBar();
-            int countdown = headLessHorseMan.getCountdown();
-            if (countdown > 0) {
-                headLessHorseMan.setCountdown(countdown - 1);
-            } else {
-                headLessHorseMan.endEvent();
-            }
-        }
-     
+        checkTimeForScheduler();     
     }
     //#region checktime
     private void checkTimeForScheduler() {

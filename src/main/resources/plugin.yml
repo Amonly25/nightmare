@@ -1,0 +1,13 @@
+main: com.ar.askgaming.nightmare.NightMare
+name: Nightmare
+version: 1.0
+api-version: 1.21
+author: AMONLY
+description: Nightmare plugin.
+softdepend: [PlaceholderAPI]
+commands:
+  nightmare:
+    description: Nightmare command.
+    usage: /nightmare
+    aliases:
+    - nm

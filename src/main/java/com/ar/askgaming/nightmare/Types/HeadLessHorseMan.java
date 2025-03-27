@@ -34,9 +34,9 @@ public class HeadLessHorseMan extends NightAbstract {
 
         PotionEffect potion = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0);
 
-        ItemStack chest = new ItemStack(Material.LEATHER_CHESTPLATE);
-        ItemStack legs = new ItemStack(Material.LEATHER_LEGGINGS);
-        ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+        ItemStack chest = new ItemStack(Material.IRON_CHESTPLATE);
+        ItemStack legs = new ItemStack(Material.IRON_LEGGINGS);
+        ItemStack boots = new ItemStack(Material.IRON_BOOTS);
 
         getAffectedPlayers().forEach(player -> {
             Location loc = player.getLocation();
@@ -45,7 +45,7 @@ public class HeadLessHorseMan extends NightAbstract {
             Entity horse = world.spawnEntity(loc, EntityType.SKELETON_HORSE);
 
             Entity boss = world.spawnEntity(loc, EntityType.WITHER_SKELETON);
-            boss.addPassenger(horse);
+            horse.addPassenger(boss);
             Enemy enemy = (Enemy) boss;
 
             enemy.addPotionEffect(potion);

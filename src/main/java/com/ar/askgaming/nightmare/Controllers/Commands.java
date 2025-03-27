@@ -66,10 +66,10 @@ public class Commands implements TabExecutor {
         }
         switch (args[1].toLowerCase()) {
             case "bloodmoon":
-                plugin.getNightManager().getBloodMoon().start();
+                plugin.getNightManager().getBloodMoon().startEvent();
                 break;
             case "headlesshorseman":
-                plugin.getNightManager().getHeadLessHorseMan().start();
+                plugin.getNightManager().getHeadLessHorseMan().startEvent();
                 break;
             default:
                 sender.sendMessage("Unknown event: " + args[1]);
@@ -83,10 +83,10 @@ public class Commands implements TabExecutor {
         }
         switch (args[1].toLowerCase()) {
             case "bloodmoon":
-                plugin.getNightManager().getBloodMoon().end();
+                plugin.getNightManager().getBloodMoon().endEvent();
                 break;
             case "headlesshorseman":
-                plugin.getNightManager().getHeadLessHorseMan().end();
+                plugin.getNightManager().getHeadLessHorseMan().endEvent();
                 break;
             default:
                 sender.sendMessage("Unknown event: " + args[1]);

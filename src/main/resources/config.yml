@@ -1,5 +1,5 @@
 blood_moon:
-  duration: 10 # In minutes
+  duration: 600 # In seconds
   enabled_worlds:
     - world
   bossbar:
@@ -8,7 +8,7 @@ blood_moon:
   enemy_modifier:
     health: 2
     damage: 2
-    speed: 2
+    speed: 1.5
   on_enemy_death:
     additional_drops:
     - "GOLD_INGOT:1"
@@ -22,7 +22,7 @@ blood_moon:
     - ENTITY_PLAYER_HURT
 
 headless_horseman:
-  duration: 10 # In minutes 
+  duration: 600 # In seconds 
   enabled_worlds:
     - world
   bossbar:
@@ -31,7 +31,7 @@ headless_horseman:
   enemy_modifier:
     health: 2
     damage: 2
-    speed: 2
+    speed: 1.5
   on_enemy_death:
     additional_drops:
     - "IRON_INGOT:1"

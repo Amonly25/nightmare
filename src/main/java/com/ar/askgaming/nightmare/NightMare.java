@@ -40,6 +40,7 @@ public class NightMare extends JavaPlugin{
     public void onDisable(){
         nightManager.cancel();
         
+        
     }
 
     public static NightMare getInstance(){

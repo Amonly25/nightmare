@@ -68,7 +68,9 @@ public class CreatureSpawnListener implements Listener{
     }
     private void handleBloodMoon(CreatureSpawnEvent event, Entity entity){
         Enemy enemy = (Enemy) entity;
-
+        if (event.isCancelled()){
+            return;
+        }
         if (event.getSpawnReason() != SpawnReason.NATURAL){
             return;
         }
@@ -76,16 +78,19 @@ public class CreatureSpawnListener implements Listener{
         if (entity.getType() == EntityType.ENDER_DRAGON || entity.getType() == EntityType.WITHER){
             return;
         }
-        Entity newEntity = entity.getWorld().spawnEntity(entity.getLocation(), EntityType.WITCH);
-        newEntity.setCustomName("Blood Moon Witch");
-        newEntity.setCustomNameVisible(true);
-        entity.remove();
+        if (entity.getType() == EntityType.SPIDER){
+            Entity newEntity = entity.getWorld().spawnEntity(entity.getLocation(), EntityType.WITCH);
+            enemy.addPassenger(newEntity);
+        }
+        entity.setVisualFire(true);
 
     }
 
     private void handleHeadLessHorseMan(CreatureSpawnEvent event, Entity entity){
         Enemy enemy = (Enemy) entity;
-
+        if (event.isCancelled()){
+            return;
+        }
         if (event.getSpawnReason() != SpawnReason.NATURAL){
             return;
         }
@@ -93,9 +98,6 @@ public class CreatureSpawnListener implements Listener{
         if (entity.getType() == EntityType.ENDER_DRAGON || entity.getType() == EntityType.WITHER){
             return;
         }
-        Entity newEntity = entity.getWorld().spawnEntity(entity.getLocation(), EntityType.SKELETON);
-        newEntity.setCustomName("Horseman Soldier");
-        newEntity.setCustomNameVisible(true);
-        entity.remove();
+        
     }
 }
