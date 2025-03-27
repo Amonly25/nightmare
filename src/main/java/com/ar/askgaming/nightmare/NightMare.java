@@ -6,6 +6,8 @@ import com.ar.askgaming.nightmare.Controllers.Commands;
 import com.ar.askgaming.nightmare.Controllers.Language;
 import com.ar.askgaming.nightmare.Controllers.PlaceHolders;
 import com.ar.askgaming.nightmare.Listeners.CreatureSpawnListener;
+import com.ar.askgaming.nightmare.Listeners.EntityDamageByEntityListener;
+import com.ar.askgaming.nightmare.Listeners.EntityDeathListener;
 
 public class NightMare extends JavaPlugin{
     
@@ -30,6 +32,8 @@ public class NightMare extends JavaPlugin{
         }
 
         new CreatureSpawnListener();
+        new EntityDeathListener();
+        new EntityDamageByEntityListener();
     }
     
 

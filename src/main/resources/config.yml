@@ -5,6 +5,21 @@ blood_moon:
   bossbar:
     title: "Blood Moon"
     color: RED
+  enemy_modifier:
+    health: 2
+    damage: 2
+    speed: 2
+  on_enemy_death:
+    additional_drops:
+    - "GOLD_INGOT:1"
+  on_enemy_attack:
+    bleeding: true
+    effects:
+    - SLOWNESS:2:0
+    - NAUSEA:2:0
+    - WEAKNESS:2:0
+    sounds:
+    - ENTITY_PLAYER_HURT
 
 headless_horseman:
   duration: 10 # In minutes 
@@ -13,6 +28,20 @@ headless_horseman:
   bossbar:
     title: "Headless Horseman"
     color: PURPLE
+  enemy_modifier:
+    health: 2
+    damage: 2
+    speed: 2
+  on_enemy_death:
+    additional_drops:
+    - "IRON_INGOT:1"
+  on_enemy_attack:
+    effects:
+    - SLOWNESS:2:0
+    - BBLINDNESS:2:0
+    - WEAKNESS:2:0
+    sounds:
+    - ENTITY_PLAYER_HURT
 
 
 # Can be any time in the format of HH:MM
