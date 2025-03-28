@@ -58,4 +58,9 @@ public class HeadLessHorseMan extends NightAbstract {
             enemy.setCustomNameVisible(true);
         });
     }
+
+    @Override
+    public void run() {
+        
+    }
 }
