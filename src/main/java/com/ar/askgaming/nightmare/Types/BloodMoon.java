@@ -3,6 +3,8 @@ package com.ar.askgaming.nightmare.Types;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import com.ar.askgaming.nightmare.NightMare;
 
@@ -10,21 +12,20 @@ public class BloodMoon extends NightAbstract {
 
     public BloodMoon() {
         super(NightMare.Type.BLOOD_MOON);
-
-        
-        runTaskTimer(plugin, 20, 20);
     }
 
     @Override
     public void start() {
-
+        getAffectedPlayers().forEach(player -> {
+            
+        });
 
     }
 
     @Override
     public void end() {
 
-        
+  
     }
 
     @Override
@@ -33,9 +34,14 @@ public class BloodMoon extends NightAbstract {
 
         if (state == NightMare.State.RUNNING) {
             for (Player player : getAffectedPlayers()) {
+
+                if (hasBlockAbove(player)) continue;
+
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 30, 0, false, false));
+
                 Location center = player.getLocation();
 
-                for (int i = 0; i < 20; i++) { // Generar múltiples gotas en cada ciclo
+                for (int i = 0; i < 30; i++) { // Generar múltiples gotas en cada ciclo
                     double angle = Math.random() * 360;
                     double distance = Math.random() * 15; // Hasta 10 bloques de distancia
             
@@ -43,14 +49,14 @@ public class BloodMoon extends NightAbstract {
                     double z = center.getZ() + Math.sin(Math.toRadians(angle)) * distance + (Math.random() - 0.5);
                     
                     // Variación de altura más natural
-                    double baseHeight = center.getY() + 5; // Altura base
-                    double variation = Math.random() * (Math.random() > 0.5 ? 15 : 2); // Diferentes alturas para cada gota
+                    double baseHeight = center.getY() + 10; // Altura base
+                    double variation = Math.random() * (Math.random() > 0.5 ? 20 : 2); // Diferentes alturas para cada gota
                     double y = baseHeight + variation;
             
                     Location bloodLocation = new Location(player.getWorld(), x, y, z);
             
                     // Efecto de lluvia de sangre con LANDING_LAVA
-                    player.getWorld().spawnParticle(Particle.LANDING_LAVA, bloodLocation, 3, 0, 0, 0, 0); // Reducido a 3 partículas para mejor dispersión           
+                    player.getWorld().spawnParticle(Particle.FALLING_LAVA, bloodLocation, 5, 0, 0, 0, 1); // Reducido a 3 partículas para mejor dispersión           
                 }
             }
             if (coutdown > 0) {

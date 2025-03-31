@@ -39,7 +39,8 @@ public class NightMare extends JavaPlugin{
 
     public void onDisable(){
         nightManager.cancel();
-        
+        nightManager.getBloodMoon().endEvent();
+        nightManager.getHeadLessHorseMan().endEvent();
         
     }
 

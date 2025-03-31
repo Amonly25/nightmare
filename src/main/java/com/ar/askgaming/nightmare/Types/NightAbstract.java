@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameRule;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
@@ -30,9 +32,8 @@ public abstract class NightAbstract extends BukkitRunnable{
 
         createBossBar();
         loadConfig();
-
         
-
+        runTaskTimer(plugin, 20, 20);
     }
     
     protected void createBossBar() {
@@ -80,8 +81,8 @@ public abstract class NightAbstract extends BukkitRunnable{
         bossBar.setProgress(1);
 
         getAffectedWorlds().forEach(world -> {
-            world.setTime(13000);
-            world.setStorm(isCancelled());
+            world.setTime(18000);
+            world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         });
 
         start();
@@ -97,7 +98,10 @@ public abstract class NightAbstract extends BukkitRunnable{
         for (Player pl : Bukkit.getOnlinePlayers()) {
             pl.sendMessage(plugin.getLang().get(type.name().toLowerCase()+".end", pl));
         }
-        getAffectedWorlds().forEach(world -> world.setTime(0));
+        getAffectedWorlds().forEach(world -> {
+            world.setTime(0);
+            world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
+        });
         end();
 
     }
@@ -132,4 +136,14 @@ public abstract class NightAbstract extends BukkitRunnable{
     public Integer getCountdown() {
         return coutdown;
     }
+
+    public boolean hasBlockAbove(Player player){
+        Location loc = player.getLocation();
+
+        if (player.getWorld().getHighestBlockAt(loc).getY() > loc.getY()){
+            return true;
+
+        }
+        return false;
+    }    
 }

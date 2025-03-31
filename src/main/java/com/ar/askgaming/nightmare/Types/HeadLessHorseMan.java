@@ -2,10 +2,12 @@ package com.ar.askgaming.nightmare.Types;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Enemy;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -62,5 +64,24 @@ public class HeadLessHorseMan extends NightAbstract {
     @Override
     public void run() {
         
+        if (state == NightMare.State.RUNNING) {
+            for (Player player : getAffectedPlayers()) {
+
+                Location center = player.getLocation();
+
+                double distance = Math.random() * 15; // Hasta 10 bloques de distancia
+        
+                double x = center.getX() + distance * (Math.random() - 0.5);
+                double z = center.getZ() + distance * (Math.random() - 0.5);
+                
+                player.getWorld().strikeLightningEffect(center.clone().add(x, 0, z));        
+                
+            }
+            if (coutdown > 0) {
+                coutdown--;
+            } else {
+                endEvent();
+            }
+        } 
     }
 }
