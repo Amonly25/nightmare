@@ -1,13 +1,17 @@
 package com.ar.askgaming.nightmare.Types;
 
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Enemy;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.WitherSkeleton;
+import org.bukkit.inventory.HorseInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -19,11 +23,20 @@ public class HeadLessHorseMan extends NightAbstract {
     public HeadLessHorseMan() {
         super(NightMare.Type.HEADLESS_HORSEMAN);
     }
+    private WitherSkeleton witherSkeleton = null;
+
+    private PotionEffect potion = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0);
+    private ItemStack chest = new ItemStack(Material.NETHERITE_CHESTPLATE);
+    private ItemStack legs = new ItemStack(Material.NETHERITE_LEGGINGS);
+    private ItemStack boots = new ItemStack(Material.NETHERITE_BOOTS);
+
+    public void loadConfig() {
+        super.loadConfig();
+        
+    }
 
     @Override
     public void start() {
-
-        spawnBoss();
     }
 
     @Override
@@ -31,34 +44,38 @@ public class HeadLessHorseMan extends NightAbstract {
 
 
     }  
+    @Override
+    protected void spawnBoss(List<Player> players) {
+        for (Player player : players) {
+            player.sendMessage(plugin.getLang().get(type.name().toLowerCase()+".spawn_boss", player));
+            int y = player.getWorld().getHighestBlockYAt(player.getLocation()) + 1;
+            Location loc = player.getLocation().clone().add(0, y, 0);
+            spawnEntity(loc);
+        }
+    }
+    private void spawnEntity(Location loc){
+        World world = loc.getWorld();
+        Entity horse = world.spawnEntity(loc, EntityType.SKELETON_HORSE);
+        Entity boss = world.spawnEntity(loc, EntityType.WITHER_SKELETON);
 
-    private void spawnBoss(){
+        applyAttributes(boss);
+        applyAttributes(horse);
 
-        PotionEffect potion = new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 0);
+        horse.addPassenger(boss);
+        Horse horseEntity = (Horse) horse;
+        HorseInventory horseInventory = horseEntity.getInventory();
+        horseInventory.setSaddle(new ItemStack(Material.SADDLE));
+        horseInventory.setArmor(new ItemStack(Material.GOLDEN_HORSE_ARMOR));
 
-        ItemStack chest = new ItemStack(Material.IRON_CHESTPLATE);
-        ItemStack legs = new ItemStack(Material.IRON_LEGGINGS);
-        ItemStack boots = new ItemStack(Material.IRON_BOOTS);
+        witherSkeleton = (WitherSkeleton) boss;
 
-        getAffectedPlayers().forEach(player -> {
-            Location loc = player.getLocation();
-            World world = loc.getWorld();
+        witherSkeleton.addPotionEffect(potion);
+        witherSkeleton.getEquipment().setChestplate(chest.clone());
+        witherSkeleton.getEquipment().setLeggings(legs.clone());
+        witherSkeleton.getEquipment().setBoots(boots.clone());
 
-            Entity horse = world.spawnEntity(loc, EntityType.SKELETON_HORSE);
-
-            Entity boss = world.spawnEntity(loc, EntityType.WITHER_SKELETON);
-            horse.addPassenger(boss);
-            Enemy enemy = (Enemy) boss;
-
-            enemy.addPotionEffect(potion);
-
-            enemy.getEquipment().setChestplate(chest.clone());
-            enemy.getEquipment().setLeggings(legs.clone());
-            enemy.getEquipment().setBoots(boots.clone());
-
-            enemy.setCustomName("Headless Horseman");
-            enemy.setCustomNameVisible(true);
-        });
+        witherSkeleton.setCustomName("Headless Horseman");
+        witherSkeleton.setCustomNameVisible(true);
     }
 
     @Override
@@ -83,5 +100,8 @@ public class HeadLessHorseMan extends NightAbstract {
                 endEvent();
             }
         } 
+    }
+    public WitherSkeleton getWitherSkeleton() {
+        return witherSkeleton;
     }
 }

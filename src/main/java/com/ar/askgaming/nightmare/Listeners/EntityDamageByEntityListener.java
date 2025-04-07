@@ -2,6 +2,7 @@ package com.ar.askgaming.nightmare.Listeners;
 
 import java.util.List;
 
+import org.bukkit.Particle;
 import org.bukkit.entity.Enemy;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -56,6 +57,11 @@ public class EntityDamageByEntityListener implements Listener{
         boolean bleeding = plugin.getConfig().getBoolean(key + ".on_enemy_attack.bleeding", false);
         if (bleeding) {
             plugin.getNightManager().startBleeding(player, 2, 1);
+        }
+
+        if (enemy.equals(plugin.getNightManager().getHeadLessHorseMan().getWitherSkeleton())) {
+            enemy.getWorld().spawnParticle(Particle.LAVA, player.getLocation(), 30, 1, 1, 1, 0);
+
         }
         
         plugin.getNightManager().addPotionEffect(effects, player);

@@ -1,7 +1,11 @@
 blood_moon:
   start: "The Blood Moon has risen!"
   end: "The Blood Moon has set!"
+  spawn: "{amount} Bosses have spawned!"
+  spawn_boss: "A BloodMone boss has spawned near you!"
 
 headless_horseman:
   start: "The Headless Horseman has arrived!"
   end: "The Headless Horseman has left!"
+  spawn: "{amount} Horsemen have spawned!"
+  spawn_boss: "A Horseman has spawned near you!"

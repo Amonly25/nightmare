@@ -26,9 +26,15 @@
         </repository>
 
         <repository>
+          <id>jitpack.io</id>
+          <url>https://jitpack.io</url>
+         </repository>
+
+        <repository>
             <id>codemc-releases</id>
             <url>https://repo.codemc.io/repository/maven-releases/</url>
         </repository>
+        
         <repository>
             <id>codemc-snapshots</id>
             <url>https://repo.codemc.io/repository/maven-snapshots/</url>
@@ -53,11 +59,11 @@
         </dependency>   
 
         <dependency>
-            <groupId>com.github.retrooper</groupId>
-            <artifactId>packetevents-spigot</artifactId>
-            <version>2.7.0</version>
+            <groupId>com.github.Amonly25</groupId>
+            <artifactId>universalnotifier</artifactId>
+            <version>-SNAPSHOT</version>
             <scope>provided</scope>
-      </dependency>
+        </dependency>
 
     </dependencies>
 

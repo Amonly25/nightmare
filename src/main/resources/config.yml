@@ -43,6 +43,12 @@ headless_horseman:
     sounds:
     - ENTITY_PLAYER_HURT
 
+# Only if UniversalNotifier is installed
+# This is usefull to send notificaions via telegram, discord or email
+# https://builtbybit.com/resources/universalnotifier-broadcast-alerts.62960/
+notifier:
+  blood_mone: "🩸 A blood moon is rising! The night will be long and full of terrors!"
+  headless_horseman: "🏇 The headless horseman is coming! Prepare for battle!"
 
 # Can be any time in the format of HH:MM
 # The event will start at the time specified
@@ -50,7 +56,7 @@ scheduler:
   monday:
     "22:00": "BLOOD_MOON"
   tuesday:
-    "22:00": "HEADLESS_HORSEMAN"
+    "22:00": "HEADLESS_HORSEMAN"w
   ednesday:
    "22:00": "BLOOD_MOON"
   thursday:
