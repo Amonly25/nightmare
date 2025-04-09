@@ -93,6 +93,7 @@ public abstract class NightAbstract extends BukkitRunnable{
         });
 
         start();
+        spawnBoss(getAffectedPlayers());
     }
 
     // Método para finalizar el evento

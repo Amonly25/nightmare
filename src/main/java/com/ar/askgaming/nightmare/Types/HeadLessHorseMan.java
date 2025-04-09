@@ -10,7 +10,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.SkeletonHorse;
 import org.bukkit.entity.WitherSkeleton;
+import org.bukkit.inventory.AbstractHorseInventory;
 import org.bukkit.inventory.HorseInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -49,7 +51,7 @@ public class HeadLessHorseMan extends NightAbstract {
         for (Player player : players) {
             player.sendMessage(plugin.getLang().get(type.name().toLowerCase()+".spawn_boss", player));
             int y = player.getWorld().getHighestBlockYAt(player.getLocation()) + 1;
-            Location loc = player.getLocation().clone().add(0, y, 0);
+            Location loc = new Location(player.getWorld(), player.getLocation().getX(), y, player.getLocation().getZ());
             spawnEntity(loc);
         }
     }
@@ -59,13 +61,13 @@ public class HeadLessHorseMan extends NightAbstract {
         Entity boss = world.spawnEntity(loc, EntityType.WITHER_SKELETON);
 
         applyAttributes(boss);
-        applyAttributes(horse);
 
-        horse.addPassenger(boss);
-        Horse horseEntity = (Horse) horse;
-        HorseInventory horseInventory = horseEntity.getInventory();
+        SkeletonHorse horseEntity = (SkeletonHorse) horse;
+        horseEntity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 1));
+  
+        AbstractHorseInventory horseInventory = horseEntity.getInventory();
         horseInventory.setSaddle(new ItemStack(Material.SADDLE));
-        horseInventory.setArmor(new ItemStack(Material.GOLDEN_HORSE_ARMOR));
+        //horseInventory.setArmor(new ItemStack(Material.GOLDEN_HORSE_ARMOR));
 
         witherSkeleton = (WitherSkeleton) boss;
 
@@ -76,6 +78,8 @@ public class HeadLessHorseMan extends NightAbstract {
 
         witherSkeleton.setCustomName("Headless Horseman");
         witherSkeleton.setCustomNameVisible(true);
+
+        horse.addPassenger(boss);
     }
 
     @Override

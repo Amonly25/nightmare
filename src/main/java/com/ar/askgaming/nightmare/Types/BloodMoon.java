@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Spider;
 import org.bukkit.entity.Witch;
@@ -35,32 +35,33 @@ public class BloodMoon extends NightAbstract {
         for (Player player : players) {
             player.sendMessage(plugin.getLang().get(type.name().toLowerCase()+".spawn_boss", player));
             int y = player.getWorld().getHighestBlockYAt(player.getLocation()) + 1;
-            Location loc = player.getLocation().clone().add(0, y, 0);
+            Location loc = new Location(player.getWorld(), player.getLocation().getX(), y, player.getLocation().getZ());
             spawnEntity(loc);
         }
     }
-   private void spawnEntity(Location loc) {
-        LivingEntity previous = null;
-
+    private void spawnEntity(Location loc) {
+        Entity base = null;
+    
         for (int i = 0; i < 5; i++) {
-            // Spawnea una araña
-            Spider spider = (Spider) loc.getWorld().spawnEntity(loc, EntityType.SPIDER);
-
-            // Spawnea una bruja
+            // Crear una bruja
             Witch witch = (Witch) loc.getWorld().spawnEntity(loc, EntityType.WITCH);
-
-            // Hace que la bruja monte la araña
-            spider.addPassenger(witch);
-
-            // Si hay una entidad anterior (pila), la nueva araña la monta
-            if (previous != null) {
-                spider.addPassenger(previous);
+    
+            // Si hay una base, esta bruja la monta
+            if (base != null) {
+                witch.addPassenger(base);
             }
-
-            // Actualiza la entidad anterior para la siguiente iteración
-            previous = spider;
+    
+            // Crear una araña
+            Spider spider = (Spider) loc.getWorld().spawnEntity(loc, EntityType.SPIDER);
+    
+            // La araña se sube a la bruja
+            spider.addPassenger(witch);
+    
+            // Actualizar la base para la próxima iteración
+            base = spider;
         }
     }
+    
 
 
     @Override
