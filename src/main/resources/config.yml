@@ -38,7 +38,7 @@ headless_horseman:
   on_enemy_attack:
     effects:
     - SLOWNESS:2:0
-    - BBLINDNESS:2:0
+    - BLINDNESS:2:0
     - WEAKNESS:2:0
     sounds:
     - ENTITY_PLAYER_HURT

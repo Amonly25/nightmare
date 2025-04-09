@@ -26,6 +26,8 @@ public abstract class NightAbstract extends BukkitRunnable{
     protected BossBar bossBar;
 
     protected Integer duration, coutdown, damageMutiplier, SpeedMutiplier;
+    protected String bossBarTitle;
+    protected BarColor bossBarColor;
     protected Double bossHealth;
 
     protected final NightMare plugin;
@@ -34,23 +36,27 @@ public abstract class NightAbstract extends BukkitRunnable{
         this.plugin = NightMare.getInstance();
         this.type = type;
 
-        createBossBar();
         loadConfig();
+        createBossBar();
         
         runTaskTimer(plugin, 20, 20);
     }
     
     protected void createBossBar() {
-        bossBar = plugin.getServer().createBossBar(type.name(), BarColor.RED, BarStyle.SOLID);
+        bossBar = plugin.getServer().createBossBar(bossBarTitle, bossBarColor, BarStyle.SOLID);
         bossBar.setVisible(true);
     }
     protected void loadConfig() {
         duration = plugin.getConfig().getInt(type.name().toLowerCase() + ".duration",600);
-        coutdown = duration;
-        String title = plugin.getConfig().getString(type.name().toLowerCase() + ".title", type.name());
-        if (bossBar != null) {
-            bossBar.setTitle(title);
+        bossBarTitle = plugin.getConfig().getString(type.name().toLowerCase() + ".bossbar.title", type.name()).replace("&", "§");
+
+        try {
+            bossBarColor = BarColor.valueOf(plugin.getConfig().getString(type.name().toLowerCase() + ".bossbar.color", "RED").toUpperCase());
+        } catch (Exception e) {
+            plugin.getLogger().warning("Invalid boss bar color in config for " + type.name() + ". Defaulting to RED.");
         }
+
+        coutdown = duration;
 
         affectedWorlds.clear();
         List<String> list = plugin.getConfig().getStringList(type.name().toLowerCase() + ".enabled_worlds");

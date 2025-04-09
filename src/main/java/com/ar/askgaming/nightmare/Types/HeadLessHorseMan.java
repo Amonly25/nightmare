@@ -5,15 +5,12 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.Enemy;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.SkeletonHorse;
 import org.bukkit.entity.WitherSkeleton;
 import org.bukkit.inventory.AbstractHorseInventory;
-import org.bukkit.inventory.HorseInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -44,8 +41,8 @@ public class HeadLessHorseMan extends NightAbstract {
     @Override
     public void end() {
 
-
     }  
+    
     @Override
     protected void spawnBoss(List<Player> players) {
         for (Player player : players) {
